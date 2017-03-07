@@ -1,0 +1,134 @@
+/**
+ * 文章样式
+ */
+
+.article {
+  display: block;
+  margin: 0 auto;
+  padding-bottom: rem(20);
+  @include clearfix;
+}
+
+.article-title {
+  margin-bottom: rem(30);
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+  text-align: center;
+  font-size: rem(28);
+  font-weight: 500;
+  color: $text-color-heading;
+}
+
+.article-infobar {
+  display: block;
+  margin-bottom: rem(30);
+  text-align: center;
+  font-size: rem(16);
+  color: $text-color-mute;
+  @include clearfix;
+
+  > * {
+    margin-right: rem(15);
+    display: inline-block;
+    font-style: italic;
+
+    > a {
+      margin-right: rem(4);
+      color: $text-color-mute;
+
+      &:focus,
+      &:active,
+      &:hover {
+        color: $text-color-theme;
+      }
+
+      &:after {
+        content: ",";
+        color: $text-color-mute;
+      }
+
+      &:last-child:after {
+        display: none;
+      }
+    }
+  }
+
+  .fa {
+    margin-right: rem(4);
+    width: rem(18);
+    vertical-align: text-top;
+    line-height: em(18);
+    font-size: em(14);
+  }
+}
+
+.article-content {
+  display: block;
+  word-break: break-all;
+  word-wrap: break-word;
+  font-size: rem(18);
+  color: #000;
+  @include clearfix;
+
+  img {
+    max-width: 100%;
+  }
+}
+
+.article-widgets {
+  display: block;
+  margin: rem(30) 0;
+  font-size: rem(18);
+  color: #000;
+  @include clearfix;
+
+  > * {
+    margin-right: rem(15);
+    display: block;
+    font-style: normal;
+
+    .fa {
+      margin-right: rem(10);
+      width: rem(18);
+      vertical-align: text-top;
+      line-height: rem(18);
+      font-size: em(18);
+      color: #000;
+    }
+
+    > a {
+      margin-right: rem(4);
+      font-size: em(18);
+      color: inherit;
+
+      &:focus,
+      &:active,
+      &:hover {
+        color: $text-color-theme;
+      }
+
+      &:after {
+        content: ",";
+        color: inherit;
+      }
+
+      &:last-child:after {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (max-width: $screen-xs) {
+  .article-infobar {
+    font-size: rem(12);
+  }
+
+  .article-content {
+    font-size: rem(14);
+  }
+
+  .article-widgets {
+    font-size: rem(14);
+  }
+}

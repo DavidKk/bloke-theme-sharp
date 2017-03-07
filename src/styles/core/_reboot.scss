@@ -1,0 +1,222 @@
+/**
+ * 基础样色
+ */
+
+html {
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  font-size: $font-size-root;
+  background-clip: padding-box;
+
+      -ms-overflow-style: scrollbar;
+
+      -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+* {
+  @include selection() {
+    color: #fff;
+    background-color: #000;
+  }
+
+  &,
+  &:before,
+  &:after {
+    box-sizing: border-box;
+    outline: none;
+  }
+}
+
+@at-root {
+  @-ms-viewport {
+    width: device-width;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  line-height: $line-height-base;
+  font-size: $font-size-base;
+  font-family: $font-family-base;
+  color: $text-color-base;
+  background-color: $body-bg;
+}
+
+/**
+ * 文字段落
+ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: .5rem;
+  font-size: rem(16);
+  font-weight: 400;
+}
+
+h1 {
+  font-size: rem(36);
+}
+
+h2 {
+  font-size: rem(28);
+}
+
+h3 {
+  font-size: rem(24);
+}
+
+h4 {
+  font-size: rem(20);
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+ol,
+ul,
+dl {
+  margin-top: 0;
+  margin-bottom: 1rem;
+
+  li {
+    list-style-type: none;
+  }
+}
+
+ol ol,
+ul ul,
+ol ul,
+ul ol {
+  margin-bottom: 0;
+}
+
+
+/**
+ * 链接
+ */
+
+a {
+  color: $link-color;
+  text-decoration: $link-decoration;
+  @include transition(color .25s ease-in-out);
+
+  &:active,
+  &:hover,
+  &:focus {
+    color: $link-hover-color;
+    text-decoration: $link-hover-decoration;
+  }
+}
+
+/**
+ * 图片
+ */
+
+img {
+  vertical-align: middle;
+}
+
+/**
+ * 表单
+ */
+
+label {
+  display: inline-block;
+  margin-bottom: .5rem;
+}
+
+input,
+button,
+select,
+textarea {
+  margin: 0;
+  line-height: inherit;
+  border-radius: 0;
+}
+
+textarea {
+  resize: none;
+}
+
+fieldset {
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+legend {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin-bottom: .5rem;
+  font-size: 1.5rem;
+  line-height: inherit;
+}
+
+input[type="search"] {
+  -webkit-appearance: none;
+}
+
+output {
+  display: inline-block;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+
+/**
+ * 其他
+ */
+
+[role="button"] {
+  cursor: pointer;
+}
+
+a,
+area,
+button,
+[role="button"],
+input,
+label,
+select,
+summary,
+textarea {
+  touch-action: manipulation;
+}
+
+
+@media (max-width: $screen-xs) {
+  $scale-radio: 2/3;
+
+  h1 {
+    font-size: rem(36*$scale-radio);
+  }
+
+  h2 {
+    font-size: rem(28*$scale-radio);
+  }
+
+  h3 {
+    font-size: rem(24*$scale-radio);
+  }
+
+  h4 {
+    font-size: rem(20*$scale-radio);
+  }
+}

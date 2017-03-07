@@ -1,0 +1,19 @@
+/**
+ * 布局
+ */
+
+.container {
+  display: block;
+  margin: 0 auto;
+  padding: 0 rem(15);
+  max-width: $screen-xl;
+  @include clearfix;
+}
+
+.container-sm {
+  max-width: $screen-sm;
+}
+
+.container.context {
+  min-height: rem(400);
+}

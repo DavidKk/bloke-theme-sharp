@@ -1,0 +1,22 @@
+doctype
+html
+  head
+    include ./partials/_head.pug
+    title Welcome | David Jones
+
+  body
+    include ./partials/_header.pug
+
+    .tag-container.container.context
+      .tag-group
+        h1 Posts' Tags
+        ul.tag-block
+          for articles, name in metadata.tags
+            li
+              a(href= '/article/list/tags/' + name)
+                .text= name
+                  span= articles.length
+                b(style='width:#{ articles.length/size*100 }%;')
+                  i
+
+    include ./partials/_footer.pug

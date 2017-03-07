@@ -1,0 +1,66 @@
+/**
+ * 归档
+ */
+
+.archive-group {
+  display: block;
+  margin-bottom: rem(30);
+  @include clearfix;
+
+  h1 {
+    margin-bottom: rem(45);
+    font-family: "GT-Sectra-Fine-Book",serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+.archive {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: rem(15);
+  @include clearfix;
+}
+
+.archive-heading {
+  display: block;
+  font-size: rem(30);
+  @include clearfix;
+
+  a {
+    display: inline-block;
+    float: left;
+    color: #444;
+
+    &:hover {
+      color: #000;
+    }
+  }
+}
+
+.archive-body {
+  display: block;
+  @include clearfix;
+  color: #000;
+}
+
+.archive-article {
+  display: block;
+  margin: rem(15) 0;
+  @include clearfix;
+  font-size: rem(20);
+
+  .archive-article-title {
+    color: $theme-color;
+
+    &:hover {
+      color: darken($theme-color, 10%);
+    }
+  }
+
+  .archive-article-date {
+    font-szie: rem(24);
+    font-weight: bold;
+    font-family: "GT-Sectra-Fine-Book",serif;
+  }
+}

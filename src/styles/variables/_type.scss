@@ -1,0 +1,17 @@
+/**
+ * 字体
+ */
+
+$font-size-root:        16px !default;
+$font-size-base:        rem(14) !default;
+$font-family-base:      STXihei,"华文细黑",
+                        "Microsoft YaHei","微软雅黑",
+                        Lusitana,"Helvetica Neue",Arial,
+                        sans-serif;
+
+$line-height-base:      24px/$font-size-root !default;
+
+$text-color-heading:    #000 !default;
+$text-color-base:       #838383 !default;
+$text-color-mute:       #b3b3b3 !default;
+$text-color-theme:      $theme-color !default;

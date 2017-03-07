@@ -1,0 +1,63 @@
+/**
+ * 头部
+ */
+
+header.header-container {
+  display: block;
+  margin-bottom: rem(60);
+  padding-top: rem(30);
+  width: 100%;
+  @include clearfix;
+
+  .brand {
+    display: inline-block;
+    float: left;
+    width: 20%;
+    vertical-align: middle;
+    line-height: rem(50);
+    font-size: rem(36);
+    font-weight: 300;
+    color: #c3c3c3;
+  }
+
+  nav.nav {
+    display: inline-block;
+    float: left;
+    overflow: hidden;
+    width: 80%;
+    height: rem(50);
+    vertical-align: middle;
+    line-height: rem(50);
+    @include clearfix;
+
+    a {
+      display: inline-block;
+      float: right;
+      margin: 0 rem(15);
+      font-size: rem(18);
+      font-weight: normal;
+      color: #c3c3c3;
+    }
+  }
+}
+
+@media (max-width: $screen-sm) {
+  header.header-container {
+    margin-bottom: rem(20);
+
+    .brand,
+    nav.nav {
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+    
+    .brand {
+      margin-bottom: rem(20);
+    }
+
+    nav.nav > a {
+      float: none;
+    }
+  }
+}

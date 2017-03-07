@@ -1,0 +1,22 @@
+/**
+ * 心跳动画
+ */
+@include keyframes(heart-beating) {
+  0%,
+  50%,
+  100% {
+    transform: scale(1);
+  }
+
+  5% {
+    transform: scale(1.2);
+  }
+
+  10% {
+    transform: scale(1.1);
+  }
+
+  15% {
+    transform: scale(1.3);
+  }
+}

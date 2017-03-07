@@ -1,0 +1,118 @@
+/**
+ * 文章摘要
+ */
+
+.entry-group {
+  display: block;
+  padding-bottom: rem(45);
+  @include clearfix;
+}
+
+.entry {
+  display: block;
+  border-bottom: 1px solid #ccc;
+  padding: rem(25) 0 rem(35) 0;
+  font-size: rem(16);
+  @include clearfix;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+.entry-title {
+  display: inline-block;
+  font-weight: normal;
+  font-size: rem(30);
+  color: $text-color-heading;
+
+  a {
+    color: inherit;
+    @include transition(color .25s ease-in-out);
+
+    &:focus,
+    &:active,
+    &:hover {
+      color: $text-color-theme;
+    }
+  }
+}
+
+.entry-infobar {
+  display: block;
+  font-size: rem(16);
+  color: $text-color-mute;
+  @include clearfix;
+
+  > * {
+    display: inline-block;
+    float: left;
+    margin-right: rem(15);
+    font-style: italic;
+
+    > a {
+      margin-right: rem(4);
+      color: $text-color-mute;
+
+      &:hover {
+        color: $text-color-theme;
+      }
+
+      &:after {
+        content: ',';
+        color: $text-color-mute;
+      }
+
+      &:last-child:after {
+        display: none;
+      }
+    }
+  }
+
+  .fa {
+    margin-right: rem(4);
+    width: rem(18);
+    line-height: rem(14.4);
+    vertical-align: text-top;
+    font-size: rem(14);
+  }
+}
+
+.entry-content {
+  display: block;
+  padding: rem(15) 0;
+  word-break: break-all;
+  word-wrap: break-word;
+  @include clearfix;
+}
+
+.entry-more {
+  display: block;
+  @include clearfix;
+
+  .btn {
+    text-transform: uppercase;
+    letter-spacing: rem(2);
+    line-height: $font-size-root/13px;
+    font-size: rem(13);
+    @include transition(all .25s ease-in-out);
+
+    &:focus,
+    &:active,
+    &:hover {
+      border-color: transparent;
+      background-color: $text-color-theme;
+      color: #fff;
+    }
+  }
+}
+
+@media (max-width: $screen-xs) {
+  .entry-title {
+    font-size: rem(24);
+  }
+
+  .entry-infobar {
+    font-size: rem(14);
+  }
+}

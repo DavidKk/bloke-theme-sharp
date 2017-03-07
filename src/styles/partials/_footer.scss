@@ -1,0 +1,61 @@
+/**
+ * 底部
+ */
+
+footer.footer-container {
+  display: block;
+  margin-top: rem(80);
+  padding: rem(60) 0 rem(40) 0;
+  width: 100%;
+  background-color: #444;
+  color: #fff;
+  @include clearfix;
+
+  .about {
+    display: block;
+    text-align: center;
+    @include clearfix;
+
+    a,
+    span {
+      margin: 0 rem(10);
+    }
+
+    a > .fa,
+    span > .fa {
+      color: #fff;
+      font-size: rem(36);
+    }
+
+    span > .fa {
+      cursor: cell;
+      color: $red;
+      @include animation(heart-beating 2.5s infinite);
+    }
+  }
+
+  .copyright {
+    display: block;
+    margin-top: rem(20);
+    text-align: center;
+    font-size: rem(14);
+    @include clearfix;
+
+    a {
+      color: #fff;
+    }
+  }
+}
+
+@media (max-width: $screen-xs) {
+  footer.footer-container .about {
+    a,
+    span {
+      margin: 0 rem(8);
+
+      .fa {
+        font-size: rem(24);
+      }
+    }
+  }
+}

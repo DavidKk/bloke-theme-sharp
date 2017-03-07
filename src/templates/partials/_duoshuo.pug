@@ -1,0 +1,14 @@
+.ds-thread(data-thread-key= article.id, data-title= article.title, data-url= '/article/index/' + article.id)
+script.
+  var duoshuoQuery = {
+    short_name: 'davidkk'
+  }
+
+  !(function() {
+    var ds = document.createElement('script')
+    ds.type = 'text/javascript';ds.async = true
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js'
+    ds.charset = 'UTF-8'
+
+    !(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds)
+  })()
