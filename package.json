@@ -5,7 +5,7 @@
   "description": "bloke theme",
   "homepage": "https://github.com/DavidKk/bloke-theme-sharp",
   "author": "DavidJones",
-  "main": "./src/bloke.config.js",
+  "main": "./dist/bloke.config.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/DavidKk/bloke-theme-sharp.git"
@@ -14,8 +14,11 @@
     "node": ">= 6.2.2"
   },
   "scripts": {
-    "develop": "webpack --config ./webpack/webpack.develop.config.babel.js --watch",
-    "release": "webpack --progress --profile --hide-modules --config ./webpack/webpack.product.config.babel.js",
+    "compile": "babel ./src/bloke.config.js --out-file ./dist/bloke.config.js",
+    "webpack:develop": "webpack --config ./webpack/webpack.develop.config.babel.js --watch",
+    "webpack:release": "webpack --progress --profile --hide-modules --config ./webpack/webpack.product.config.babel.js",
+    "develop": "npm run webpack:develop",
+    "release": "npm run webpack:release && npm run compile",
     "start": "npm run develop"
   },
   "devDependencies": {

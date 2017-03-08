@@ -8,7 +8,7 @@ export default {
   },
   renderer: [
     {
-      template: './templates/article_list.pug',
+      template: './article_list.pug',
       picker ({ articles }, setting) {
         let perPage = setting.perPage || 10;
         let chunks  = _.chunk(Object.keys(articles), perPage);
@@ -31,7 +31,7 @@ export default {
      * article sort by datetime
      */
     {
-      template: './templates/article_list.pug',
+      template: './article_list.pug',
       picker ({ articles }, setting) {
         let perPage  = setting.perPage || 10;
         let chunks   = _.chunk(Object.keys(articles), perPage);
@@ -56,7 +56,7 @@ export default {
      * article filter by archive
      */
     {
-      template: './templates/article_list.pug',
+      template: './article_list.pug',
       picker ({ tags }, setting) {
         let pages = _.map(tags, function (articles, name) {
           let perPage  = setting.perPage || 10;
@@ -85,7 +85,7 @@ export default {
      * article filter by archive
      */
     {
-      template: './templates/article_list.pug',
+      template: './article_list.pug',
       picker ({ archives }, setting) {
         let pages = _.map(archives, function (articles, name) {
           let perPage  = setting.perPage || 10;
@@ -113,7 +113,7 @@ export default {
      * author articles page
      */
     {
-      template: './templates/article_list.pug',
+      template: './article_list.pug',
       picker ({ authors }, setting) {
         let pages = _.map(authors, function (articles, name) {
           let perPage  = setting.perPage || 10;
@@ -141,7 +141,7 @@ export default {
      * article detail page
      */
     {
-      template : './templates/article.pug',
+      template : './article.pug',
       picker ({ articles }) {
         return _.map(articles, function (article) {
           return {
@@ -152,17 +152,17 @@ export default {
       },
     },
     // {
-    //   template : './templates/tag.pug',
+    //   template : './tag.pug',
     //   output   : './tag/index.html',
     //   picker   : 'tags',
     // },
     // {
-    //   template : './templates/archive.pug',
+    //   template : './archive.pug',
     //   output   : './archive/index.html',
     //   picker   : 'archives',
     // },
     // {
-    //   template : './templates/error.pug',
+    //   template : './error.pug',
     //   output   : './error.html',
     // },
   ],
