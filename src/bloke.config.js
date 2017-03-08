@@ -1,6 +1,7 @@
 import _ from 'lodash';
 
 export default {
+  ignore: [/node_modules/],
   engine: {
     use  : 'pug',
     test : /\.pug$/,

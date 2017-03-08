@@ -10,11 +10,10 @@ export default WebpackMerger(webpackConfig, {
     new webpack.LoaderOptionsPlugin({
       debug: true,
     }),
-
     /**
-     * BrowserSync Plugins
-     * docs:
-     * - https://www.browsersync.io
+     * BrowserSync Plugin
+     * local test but weinre not support https
+     * docs: https://www.browsersync.io
      */
     new BrowserSyncPlugin({
       host      : 'localhost',

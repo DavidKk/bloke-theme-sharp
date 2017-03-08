@@ -5,4 +5,4 @@ export const RESOURCE_PATH = path.join(ROOT_PATH, './src');
 export const DISTRICT_PATH = path.join(ROOT_PATH, './dist');
 export const COVERAGE_PATH = path.join(ROOT_PATH, './coverage');
 
-export const SERVER_PORT = 8712;
+export const SERVER_PORT = 51000;
