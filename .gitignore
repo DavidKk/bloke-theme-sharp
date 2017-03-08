@@ -4,12 +4,6 @@
 
 # Temporary folders
 .temporary
-.dist
-/vhosts
-
-
-# Logs
-/logs
 
 
 # Coverage directory used by tools like istanbul
