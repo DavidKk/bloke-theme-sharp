@@ -4,7 +4,11 @@ import path              from 'path';
 import async             from 'async';
 import { transformFile } from 'babel-core';
 
-export function transformFolder (folder, output, callback) {
+export function transformFolder (folder, output, options, callback) {
+  if (4 > arguments.length) {
+    return transformFolder(folder, output, {}, options);
+  }
+
   if (!fs.statSync(folder).isDirectory()) {
     return;
   }
@@ -15,14 +19,14 @@ export function transformFolder (folder, output, callback) {
 
     return function (callback) {
       if (fs.statSync(file).isDirectory()) {
-        transformFolder(file, path.join(output, filename), callback);
+        transformFolder(file, path.join(output, filename), options, callback);
       }
       else {
         if ('.js' !== path.extname(file)) {
           return callback(null, null);
         }
 
-        transform(file, path.join(output, filename), callback);
+        transform(file, path.join(output, filename), options, callback);
       }
     };
   });
@@ -37,21 +41,23 @@ export function transformFolder (folder, output, callback) {
   });
 }
 
-export function transform (file, output, callback) {
+export function transform (file, output, options, callback) {
+  if (4 > arguments.length) {
+    return transform(file, output, {}, options);
+  }
+
   if (!_.isFunction(callback)) {
     throw new Error('callback is not provided');
   }
 
-  transformFile(file, {
-    plugins: [
-      require.resolve('babel-plugin-transform-es2015-modules-amd'),
-    ],
+  options = _.defaultsDeep(options, {
     presets: [
       require.resolve('babel-preset-es2015'),
       require.resolve('babel-preset-stage-0'),
     ],
-  },
-  function (error, result) {
+  });
+
+  transformFile(file, options, function (error, result) {
     if (error) {
       callback(error);
       return;

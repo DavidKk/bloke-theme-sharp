@@ -1,26 +1,26 @@
-import _                   from 'lodash';
-import fs                  from 'fs-extra';
-import path                from 'path';
-import colors              from 'colors';
-import chokidar            from 'chokidar';
-import promisify           from 'es6-promisify';
-import * as VARS           from './variables';
-import { compileFolder }   from './style';
-import { transformFolder } from './babel';
+import _                             from 'lodash';
+import fs                            from 'fs-extra';
+import path                          from 'path';
+import colors                        from 'colors';
+import chokidar                      from 'chokidar';
+import promisify                     from 'es6-promisify';
+import * as VARS                     from './variables';
+import { compileFolder }             from './style';
 import {
-  copyFolder as _copyFolder,
-  copy as _copyFile,
-}                          from './copy';
+  transformFolder,
+  transform,
+}                                    from './babel';
+import { copyFolder as _copyFolder } from './copy';
 import {
   trace,
   printStats,
-}                          from './utils';
+}                                    from './utils';
 
-let log             = trace.bind(null, `[${colors.blue('BK')}] `);
-let compileStyle    = promisify(compileFolder);
-let transformScript = promisify(transformFolder);
-let copyFolder      = promisify(_copyFolder);
-let copyFile        = promisify(_copyFile);
+let log                  = trace.bind(null, `[${colors.blue('BK')}] `);
+let compileStyleFolder   = promisify(compileFolder);
+let transformBabelFolder = promisify(transformFolder);
+let transformBabel       = promisify(transform);
+let copyFolder           = promisify(_copyFolder);
 
 export function compile (options) {
   options = _.defaultsDeep(options, {
@@ -37,11 +37,15 @@ export function compile (options) {
 
     fs.removeSync(options.dist);
 
+    let plugins = [
+      require.resolve('babel-plugin-transform-es2015-modules-amd'),
+    ];
+
     Promise.all([
-      compileStyle(absolutePath(options.style, options.src), absolutePath(options.style, options.dist)),
-      transformScript(absolutePath(options.script, options.src), absolutePath(options.script, options.dist)),
+      compileStyleFolder(absolutePath(options.style, options.src), absolutePath(options.style, options.dist)),
+      transformBabelFolder(absolutePath(options.script, options.src), absolutePath(options.script, options.dist), { plugins }),
       copyFolder(absolutePath(options.template, options.src), absolutePath(options.template, options.dist)),
-      copyFile(path.join(options.src, './bloke.theme.config.js'), path.join(options.dist, './bloke.theme.config.js')),
+      transformBabel(path.join(options.src, './bloke.theme.config.js'), path.join(options.dist, './bloke.theme.config.js')),
     ])
     .then(function (chunk) {
       chunk = _.flattenDeep(chunk);
