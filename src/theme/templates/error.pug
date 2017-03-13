@@ -1,0 +1,22 @@
+doctype
+html
+  head
+    include ./partials/_head.pug
+    title Welcome | David Jones
+    link(rel='stylesheet', href='styles/bootstrap.css')
+
+  body
+    include ./partials/_header.pug
+
+    .error-container
+      .error-status 404
+
+    script.
+      setTimeout(function() {
+        if ('/' !== window.location.pathname) {
+          window.location.href = '/';
+        }
+      }, 3000)
+
+    include ./partials/_footer.pug
+    script(src='scripts/index.js')

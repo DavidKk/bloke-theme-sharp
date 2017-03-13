@@ -1,0 +1,27 @@
+doctype
+html
+  head
+    include ./partials/_head.pug
+    title Welcome | David Jones
+    link(rel='stylesheet', href='styles/bootstrap.css')
+
+  body
+    include ./partials/_header.pug
+
+    .archive-container.container.context
+      .archive-group
+        h1 Blog Posts
+
+        for articles, name in archives
+          .archive
+            h3.archive-heading
+              a(href= '/article/list/category/' + encodeURIComponent(name), title= name)= name
+
+            .archive-body
+              for article in articles
+                .archive-article
+                  a.archive-article-title(href= '/article/get/' + encodeURIComponent(article.title), title= article.title)= article.title
+                  span.archive-article-date &nbsp;&nbsp;-&nbsp;&nbsp;#{new Date(article.date).toLocaleString('en-US', { hour12: false })}
+
+    include ./partials/_footer.pug
+    script(src='scripts/index.js')

@@ -5,7 +5,7 @@
   "description": "bloke theme",
   "homepage": "https://github.com/DavidKk/bloke-theme-sharp",
   "author": "DavidJones",
-  "main": "./dist/bloke.config.js",
+  "main": "./index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/DavidKk/bloke-theme-sharp.git"
@@ -14,11 +14,10 @@
     "node": ">= 6.2.2"
   },
   "scripts": {
-    "compile": "babel ./src/bloke.config.js --out-file ./dist/bloke.config.js",
-    "webpack:develop": "webpack --config ./webpack/webpack.develop.config.babel.js --watch",
-    "webpack:release": "webpack --progress --profile --hide-modules --config ./webpack/webpack.product.config.babel.js",
-    "develop": "npm run webpack:develop",
-    "release": "npm run webpack:release && npm run compile",
+    "eslint": "eslint ./src/scripts",
+    "build": "babel ./src/scripts/ --out-dir ./dist/scripts/",
+    "develop": "rimraf ./dist/ && npm run build && node ./dist/scripts/cli.js start --watch",
+    "release": "rimraf ./dist/ && npm run build && node ./dist/scripts/cli.js start",
     "start": "npm run develop"
   },
   "devDependencies": {
@@ -26,15 +25,20 @@
     "babel-cli": "^6.23.0",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^6.4.0",
+    "babel-plugin-transform-es2015-modules-amd": "^6.24.0",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-stage-0": "^6.22.0",
     "babel-register": "^6.23.0",
     "bourbon": "^4.3.3",
     "browser-sync": "^2.18.8",
     "browser-sync-webpack-plugin": "^1.1.4",
+    "chokidar": "^1.6.1",
     "clean-webpack-plugin": "^0.1.15",
+    "colors": "^1.1.2",
+    "columnify": "^1.5.4",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.26.2",
+    "es6-promisify": "^5.0.0",
     "eslint": "^3.17.1",
     "eslint-loader": "^1.6.3",
     "extract-text-webpack-plugin": "^2.1.0",
@@ -43,6 +47,7 @@
     "html-webpack-pug-plugin": "0.0.3",
     "node-sass": "^4.5.0",
     "postcss-loader": "^1.3.3",
+    "rimraf": "^2.6.1",
     "sass-loader": "^6.0.3",
     "style-loader": "^0.13.2",
     "webpack": "^2.2.1",

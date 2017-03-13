@@ -1,0 +1,63 @@
+doctype
+html
+  head
+    include ./partials/_head.pug
+    title Welcome | David Jones
+    link(rel='stylesheet', href='styles/bootstrap.css')
+
+  body
+    include ./partials/_header.pug
+
+    .article-container.container.context
+      main.content
+        article.article
+          h1.article-title= title
+          .article-infobar
+            if category
+              .category
+                i.fa.fa-sticky-note-o
+                a(href= '/article/list/category/' + encodeURIComponent(category), title= category)= category
+
+            if date
+              time.date
+                i.fa.fa-calendar-o
+                span= new Date(date).toLocaleString('en-US', { hour12: false })
+
+            .author
+              | Written by:&nbsp;
+              a(href='https://github.com/DavidKk', title='David Jones', target='_blank') David Jones
+
+          section.article-content!= content
+
+          .article-widgets
+            if tags
+              .tags
+                i.fa.fa-tags
+                each tag in tags
+                  a(href= '/article/list/tags/' + encodeURIComponent(tag), title= tag)= tag
+
+        nav.pagination
+          ul.pagination-simple
+            //- if previous
+            //-   li
+            //-     a(href= '/article/get/' + encodeURIComponent(previous.title), title= previous.title)
+            //-       span Previous
+            //-       span= previous.title
+
+            //- if next
+            //-   li
+            //-     a(href= '/article/get/' + encodeURIComponent(next.title), title= next.title)
+            //-       span Next
+            //-       span= next.title
+
+        .comments
+          .disqus-plugin
+            //- include _partials/disqus
+          //- .duoshuo-plugin
+          //-   include _partials/duoshuo
+          //- .youyan-plugin
+          //-   include _partials/youyan
+
+    include ./partials/_footer.pug
+    script(src='scripts/index.js')
+    script#dsq-count-scr(src='//davidkk.disqus.com/count.js', async)

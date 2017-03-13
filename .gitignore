@@ -1,6 +1,6 @@
 # Output folders
 /dist
-
+/libs
 
 # Temporary folders
 .temporary
