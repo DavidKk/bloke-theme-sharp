@@ -38,7 +38,7 @@ export function compile (file, output, callback) {
   sass.render({
     file         : file,
     includePaths : [
-      path.join(__dirname, '../node_modules'),
+      path.join(__dirname, '../../node_modules'),
     ],
   },
   function (error, result) {
