@@ -2,8 +2,8 @@ const fs   = require('fs');
 const path = require('path');
 
 let filename = '/bloke.theme.config.js';
-let es5 = path.join(__dirname, './dist', filename);
-let es6 = path.join(__dirname, './src', filename);
+let es5 = path.join(__dirname, './disttheme/', filename);
+let es6 = path.join(__dirname, './src/theme/', filename);
 
 if (fs.existsSync(es5)) {
   module.exports = require(es5).default;

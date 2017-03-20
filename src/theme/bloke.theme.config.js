@@ -2,9 +2,9 @@ import _    from 'lodash';
 import path from 'path';
 
 export default {
-  root     : path.join(__dirname, '../'),
-  template : './dist/theme/templates/',
-  assets   : ['./dist/theme/styles/', './dist/theme/scripts/'],
+  root     : path.join(__dirname, '../../'),
+  template : 'dist/theme/templates/',
+  assets   : ['dist/theme/styles/', 'dist/theme/scripts/'],
   ignore   : [/node_modules/],
   engine   : {
     use  : 'pug',
