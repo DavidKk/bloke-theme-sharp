@@ -1,6 +1,38 @@
 import _    from 'lodash';
 import path from 'path';
 
+function linkArticle (title) {
+  return `/article/${encodeURIComponent(title)}.html`;
+}
+
+function linkCategory (categories) {
+  return _.map(categories, function (category) {
+    return `/category/${encodeURIComponent(category)}.html`;
+  });
+}
+
+function linkTag (tags) {
+  return _.map(tags, function (tag) {
+    return `/tag/${encodeURIComponent(tag)}.html`;
+  });
+}
+
+function packArticle (article) {
+  article.tags          = article.tag.split(',');
+  article.categories    = article.category.split(',');
+  article.link          = linkArticle(article.title);
+  article.categoryLinks = linkCategory(article.categories);
+  article.tagLinks      = linkTag(article.tags);
+
+  return article;
+}
+
+function linkPage (pages, prelink) {
+  return _.map(pages, function (page) {
+    return path.join(prelink, `/page/${page}.html`);
+  });
+}
+
 export default {
   root     : path.join(__dirname, '../../'),
   template : 'dist/theme/templates/',
@@ -14,18 +46,24 @@ export default {
     {
       template: './article_list.pug',
       picker ({ articles }, setting) {
-        let perPage = setting.perPage || 10;
-        let chunks  = _.chunk(Object.keys(articles), perPage);
+        let perPage   = setting.perPage || 10;
+        let chunks    = _.chunk(Object.keys(articles), perPage);
+        articles      = _.map(articles, packArticle);
+
+        let curPage   = 1;
+        let pages     = page(curPage, chunks.length, perPage);
+        let pageLinks = linkPage(pages, '/article/');
 
         return {
           output: './index.html',
           data  : {
             articles : _.pick(articles, chunks[0]),
             page     : {
-              perSize : perPage,
-              total   : chunks.length,
-              current : 1,
-              pages   : page(1, chunks.length, perPage)
+              perSize   : perPage,
+              total     : chunks.length,
+              current   : curPage,
+              pages     : pages,
+              pageLinks : pageLinks,
             },
           },
         };
@@ -34,24 +72,35 @@ export default {
     /**
      * article list
      * article sort by datetime
-    //  */
-    // {
-    //   template: './article_list.pug',
-    //   picker ({ articles }, setting) {
-    //     let perPage = setting.perPage || 10;
-    //     let chunks  = _.chunk(Object.keys(articles), perPage);
+     */
+    {
+      template: './article_list.pug',
+      picker ({ articles }, setting) {
+        let perPage   = setting.perPage || 10;
+        let chunks    = _.chunk(Object.keys(articles), perPage);
+        articles      = _.map(articles, packArticle);
 
-    //     return _.map(chunks, function (chunk, index) {
-    //       return {
-    //         output : `./article/page/${index + 1}.html`,
-    //         data   : {
-    //           articles : chunk,
-    //           pages    : page(index, chunks.length, perPage),
-    //         },
-    //       };
-    //     });
-    //   },
-    // },
+        return _.map(chunks, function (chunk, index) {
+          let curPage   = index + 1;
+          let pages     = page(curPage, chunks.length, perPage);
+          let pageLinks = linkPage(pages, '/article/');
+
+          return {
+            output : `./article/page/${curPage}.html`,
+            data   : {
+              articles : _.pick(articles, chunk),
+              page     : {
+                perSize   : perPage,
+                total     : chunks.length,
+                current   : curPage,
+                pages     : pages,
+                pageLinks : pageLinks,
+              },
+            },
+          };
+        });
+      },
+    },
     // /**
     //  * tags detail page to show article list
     //  * article filter by archive
@@ -138,20 +187,20 @@ export default {
     //     return _.flattenDeep(pages);
     //   },
     // },
-    // /**
-    //  * article detail page
-    //  */
-    // {
-    //   template : './article.pug',
-    //   picker ({ articles }) {
-    //     return _.map(articles, function (article) {
-    //       return {
-    //         output : `./article/${article.title}.html`,
-    //         data   : article,
-    //       };
-    //     });
-    //   },
-    // },
+    /**
+     * article detail page
+     */
+    {
+      template : './article.pug',
+      picker ({ articles }) {
+        return _.map(articles, function (article) {
+          return {
+            output : `./article/${article.title}.html`,
+            data   : article,
+          };
+        });
+      },
+    },
     // {
     //   template : './tag.pug',
     //   output   : './tag/index.html',

@@ -1,6 +1,7 @@
 doctype
 html
   head
+    base(href='/')
     include ./partials/_head.pug
     title Welcome | David Jones
     link(rel='stylesheet', href='styles/bootstrap.css')
@@ -13,18 +14,20 @@ html
         each article in articles
           section.entry
             h3.entry-title
-              a(href= '/article/get/' + encodeURIComponent(article.title), title= article.title)= article.title
+              a(href= article.link, title= article.title)= article.title
+
             .entry-infobar
               if article.category
                 .category
                   i.fa.fa-sticky-note-o
-                  a(href= '/article/list/category/' + encodeURIComponent(article.category), title= article.category)= article.category
+                  each category, index in article.categories
+                    a(href= article.categoryLinks[index], title= category)= category
 
               if article.tags
                 .tags
                   i.fa.fa-tags
-                  each tag in article.tags
-                    a(href= '/article/list/tags/' + encodeURIComponent(tag), title= tag)= tag
+                  each tag, index in article.tags
+                    a(href= article.tagLinks[index], title= tag)= tag
 
               if article.date
                 time.date
@@ -36,7 +39,7 @@ html
                 !{article.summary}
 
             .entry-more
-              a.btn(href= '/article/get/' + encodeURIComponent(article.title), title='Continue Reading') Continue Reading
+              a.btn(href= article.link, title='Continue Reading') Continue Reading
 
       nav.pagination
         ul.pagination-book
@@ -47,16 +50,16 @@ html
           if 2 < page.pages[0]
             li ...
 
-          for index in page.pages
-            if index === page.current
+          for pageNumb, index in page.pages
+            if pageNumb === page.current
               li.active
-                a(title='Currrent page')= index
+                a(title='Currrent page')= pageNumb
             else
               li
-                a(href= '/article/page/' + index + '.html', title= index)= index
+                a(href= page.pageLinks[index], title= pageNumb)= pageNumb
 
         if page.current < page.pages.slice(-1)[0]
-          a.pagination-addon(href= '/article/page/' + (page.current + 1) + '.html', title='Show me more') Show me more
+          a.pagination-addon(href= page.pageLinks[page.current], title='Show me more') Show me more
 
     include ./partials/_footer.pug
     script(src='scripts/index.js')
