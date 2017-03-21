@@ -3,7 +3,6 @@ html
   head
     include ./partials/_head.pug
     title Welcome | David Jones
-    link(rel='stylesheet', href='styles/bootstrap.css')
 
   body
     include ./partials/_header.pug
@@ -11,52 +10,59 @@ html
     .article-container.container.context
       main.content
         article.article
-          h1.article-title= title
+          h1.article-title= article.title
           .article-infobar
-            if category
+            if relative.categories
               .category
                 i.fa.fa-sticky-note-o
-                a(href= '/article/list/category/' + encodeURIComponent(category), title= category)= category
+                for category, index in relative.categories
+                  a(href= relative.categoryLinks[index], title= category)= category
 
-            if date
+            if article.date
               time.date
                 i.fa.fa-calendar-o
-                span= new Date(date).toLocaleString('en-US', { hour12: false })
+                span= new Date(article.date).toLocaleString('en-US', { hour12: false })
 
-            .author
-              | Written by:&nbsp;
-              a(href='https://github.com/DavidKk', title='David Jones', target='_blank') David Jones
+            if article.author
+              .author
+                | Written by:&nbsp;
+                a(title= article.author, target='_blank')= article.author
 
-          section.article-content!= content
+            else
+              .author
+                | Written by:&nbsp;
+                a(href='https://github.com/DavidKk', title='David Jones', target='_blank') David Jones
+
+          section.article-content!= article.html
 
           .article-widgets
-            if tags
+            if relative.tags
               .tags
                 i.fa.fa-tags
-                each tag in tags
-                  a(href= '/article/list/tags/' + encodeURIComponent(tag), title= tag)= tag
+                each tag, index in relative.tags
+                  a(href= relative.tagLinks[index], title= tag)= tag
 
         nav.pagination
           ul.pagination-simple
-            //- if previous
-            //-   li
-            //-     a(href= '/article/get/' + encodeURIComponent(previous.title), title= previous.title)
-            //-       span Previous
-            //-       span= previous.title
+            if prevArticle
+              li
+                a(href= prevArticle.link, title= prevArticle.title)
+                  span Previous
+                  span= prevArticle.title
 
-            //- if next
-            //-   li
-            //-     a(href= '/article/get/' + encodeURIComponent(next.title), title= next.title)
-            //-       span Next
-            //-       span= next.title
+            if nextArticle
+              li
+                a(href= nextArticle.link, title= nextArticle.title)
+                  span Next
+                  span= nextArticle.title
 
         .comments
           .disqus-plugin
-            //- include _partials/disqus
+            include ./partials/_disqus.pug
           //- .duoshuo-plugin
-          //-   include _partials/duoshuo
+          //-   include ./partials/_duoshuo.pug
           //- .youyan-plugin
-          //-   include _partials/youyan
+          //-   include ./partials/_youyan.pug
 
     include ./partials/_footer.pug
     script(src='scripts/index.js')

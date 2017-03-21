@@ -2,18 +2,18 @@ import _    from 'lodash';
 import path from 'path';
 
 function linkArticle (title) {
-  return `/article/${encodeURIComponent(title)}.html`;
+  return `/article/${title}.html`;
 }
 
 function linkCategory (categories) {
   return _.map(categories, function (category) {
-    return `/category/${encodeURIComponent(category)}.html`;
+    return `/category/${category}/1.html`;
   });
 }
 
 function linkTag (tags) {
   return _.map(tags, function (tag) {
-    return `/tag/${encodeURIComponent(tag)}.html`;
+    return `/tag/${tag}/1.html`;
   });
 }
 
@@ -101,120 +101,152 @@ export default {
         });
       },
     },
-    // /**
-    //  * tags detail page to show article list
-    //  * article filter by archive
-    //  */
-    // {
-    //   template: './article_list.pug',
-    //   picker ({ tags }, setting) {
-    //     let pages = _.map(tags, function (articles, name) {
-    //       let perPage  = setting.perPage || 10;
-    //       let chunks   = _.chunk(articles, perPage);
+    /**
+     * tags detail page to show article list
+     * article filter by archive
+     */
+    {
+      template: './article_list.pug',
+      picker ({ tags }, setting) {
+        let perPage = setting.perPage || 10;
 
-    //       return _.map(chunks, function (chunk, page) {
-    //         return {
-    //           output : `./tag/${name}/${page}.html`,
-    //           data   : {
-    //             articles : chunk,
-    //             page     : {
-    //               perSize : perPage,
-    //               total   : chunks.length,
-    //               current : page,
-    //             },
-    //           },
-    //         };
-    //       });
-    //     });
+        let pages = _.map(tags, function (articles, name) {
+          let chunks = _.chunk(Object.keys(articles), perPage);
+          articles   = _.map(articles, packArticle);
 
-    //     return _.flattenDeep(pages);
-    //   },
-    // },
-    // /**
-    //  * archive detail page to show article list
-    //  * article filter by archive
-    //  */
-    // {
-    //   template: './article_list.pug',
-    //   picker ({ archives }, setting) {
-    //     let pages = _.map(archives, function (articles, name) {
-    //       let perPage  = setting.perPage || 10;
-    //       let chunks   = _.chunk(articles, perPage);
+          return _.map(chunks, function (chunk, index) {
+            let curPage   = index + 1;
+            let pages     = page(curPage, chunks.length, perPage);
+            let pageLinks = linkPage(pages, `/tag/${name}/`);
 
-    //       return _.map(chunks, function (chunk, page) {
-    //         return {
-    //           output : `./category/${name}/${page}.html`,
-    //           data   : {
-    //             articles : chunk,
-    //             page     : {
-    //               perSize : perPage,
-    //               total   : chunks.length,
-    //               current : page,
-    //             },
-    //           },
-    //         };
-    //       });
-    //     });
+            return {
+              output : `./tag/${name}/${curPage}.html`,
+              data   : {
+                articles : _.pick(articles, chunk),
+                page     : {
+                  perSize   : perPage,
+                  total     : chunks.length,
+                  current   : curPage,
+                  pages     : pages,
+                  pageLinks : pageLinks,
+                },
+              },
+            };
+          });
+        });
 
-    //     return _.flattenDeep(pages);
-    //   },
-    // },
-    // /**
-    //  * author articles page
-    //  */
-    // {
-    //   template: './article_list.pug',
-    //   picker ({ authors }, setting) {
-    //     let pages = _.map(authors, function (articles, name) {
-    //       let perPage  = setting.perPage || 10;
-    //       let chunks   = _.chunk(articles, perPage);
+        return _.flattenDeep(pages);
+      },
+    },
+    /**
+     * archive detail page to show article list
+     * article filter by archive
+     */
+    {
+      template: './article_list.pug',
+      picker ({ categories }, setting) {
+        let perPage = setting.perPage || 10;
 
-    //       return _.map(chunks, function (chunk, page) {
-    //         return {
-    //           output : `./category/${name}/${page}.html`,
-    //           data   : {
-    //             articles : chunk,
-    //             page     : {
-    //               perSize : perPage,
-    //               total   : chunks.length,
-    //               current : page,
-    //             },
-    //           },
-    //         };
-    //       });
-    //     });
+        let pages = _.map(categories, function (articles, name) {
+          let chunks = _.chunk(Object.keys(articles), perPage);
+          articles   = _.map(articles, packArticle);
 
-    //     return _.flattenDeep(pages);
-    //   },
-    // },
+          return _.map(chunks, function (chunk, index) {
+            let curPage   = index + 1;
+            let pages     = page(curPage, chunks.length, perPage);
+            let pageLinks = linkPage(pages, `/category/${name}/`);
+
+            return {
+              output : `./category/${name}/${curPage}.html`,
+              data   : {
+                articles : _.pick(articles, chunk),
+                page     : {
+                  perSize   : perPage,
+                  total     : chunks.length,
+                  current   : curPage,
+                  pages     : pages,
+                  pageLinks : pageLinks,
+                },
+              },
+            };
+          });
+        });
+
+        return _.flattenDeep(pages);
+      },
+    },
     /**
      * article detail page
      */
     {
       template : './article.pug',
       picker ({ articles }) {
-        return _.map(articles, function (article) {
+        return _.map(articles, function (article, index) {
+          let relative = packArticle(article);
+          let nextArticle = articles[index +1];
+          let prevArticle = articles[index -1];
+
+          if (!_.isEmpty(prevArticle)) {
+            prevArticle.link = linkArticle(prevArticle.title);
+          }
+
+          if (!_.isEmpty(nextArticle)) {
+            nextArticle.link = linkArticle(nextArticle.title);
+          }
+
           return {
             output : `./article/${article.title}.html`,
-            data   : article,
+            data   : {
+              article     : article,
+              relative    : relative,
+              prevArticle : prevArticle,
+              nextArticle : nextArticle,
+            },
           };
         });
       },
     },
-    // {
-    //   template : './tag.pug',
-    //   output   : './tag/index.html',
-    //   picker   : 'tags',
-    // },
-    // {
-    //   template : './archive.pug',
-    //   output   : './archive/index.html',
-    //   picker   : 'archives',
-    // },
-    // {
-    //   template : './error.pug',
-    //   output   : './error.html',
-    // },
+    {
+      template : './tag.pug',
+      output   : './tag/index.html',
+      picker ({ tags, articles }, setting) {
+        let tagLinks = linkTag(Object.keys(tags));
+
+        return {
+          output: './tag/index.html',
+          data  : {
+            totalSize : articles.length,
+            tags      : tags,
+            tagLinks  : tagLinks,
+          },
+        };
+      },
+    },
+    {
+      template : './archive.pug',
+      output   : './archive/index.html',
+      picker ({ categories }, setting) {
+        let categoryLinks = linkCategory(Object.keys(categories));
+        let articleLinks  = _.map(categories, function (articles) {
+          return _.map(articles, function ({ title }) {
+            return linkArticle(title);
+          });
+        });
+
+        return {
+          output: './archive/index.html',
+          data  : {
+            categories    : categories,
+            categoryLinks : categoryLinks,
+            articleLinks  : articleLinks,
+          },
+        };
+      },
+    },
+    {
+      template : './error.pug',
+      output   : './error.html',
+    },
   ],
 };
 

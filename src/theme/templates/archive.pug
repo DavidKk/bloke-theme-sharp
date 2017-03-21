@@ -3,7 +3,6 @@ html
   head
     include ./partials/_head.pug
     title Welcome | David Jones
-    link(rel='stylesheet', href='styles/bootstrap.css')
 
   body
     include ./partials/_header.pug
@@ -12,16 +11,18 @@ html
       .archive-group
         h1 Blog Posts
 
-        for articles, name in archives
+        - let i = 0;
+        each category, name in categories
           .archive
             h3.archive-heading
-              a(href= '/article/list/category/' + encodeURIComponent(name), title= name)= name
+              a(href= categoryLinks[i], title= name)= name
 
             .archive-body
-              for article in articles
+              for article, index in category
                 .archive-article
-                  a.archive-article-title(href= '/article/get/' + encodeURIComponent(article.title), title= article.title)= article.title
+                  a.archive-article-title(href= articleLinks[i][index], title= article.title)= article.title
                   span.archive-article-date &nbsp;&nbsp;-&nbsp;&nbsp;#{new Date(article.date).toLocaleString('en-US', { hour12: false })}
+          - i ++;
 
     include ./partials/_footer.pug
     script(src='scripts/index.js')

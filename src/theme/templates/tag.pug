@@ -3,7 +3,6 @@ html
   head
     include ./partials/_head.pug
     title Welcome | David Jones
-    link(rel='stylesheet', href='styles/bootstrap.css')
 
   body
     include ./partials/_header.pug
@@ -12,13 +11,17 @@ html
       .tag-group
         h1 Posts' Tags
         ul.tag-block
+          - let i = 0;
           for articles, name in tags
             li
-              a(href= '/article/list/tags/' + name)
+              a(href= tagLinks[i], title= name)
                 .text= name
                   span= articles.length
-                b(style='width:#{ articles.length/size*100 }%;')
+
+                b(style= `width:${articles.length / totalSize * 100}%;`)
                   i
+
+            - i ++;
 
     include ./partials/_footer.pug
     script(src='scripts/index.js')
