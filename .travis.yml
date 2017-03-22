@@ -1,27 +1,24 @@
 language: node_js
 sudo: false
 node_js:
-  - 6.4.0
-
+- 6
+- 7
 cache:
   directories:
-    - node_modules
-
+  - node_modules
 install:
-  - npm install
-
+- npm install
 before_script:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
 script:
-  - npm run release
-
+- npm run release
 deploy:
   provider: npm
   skip_cleanup: true
-  on:
-    tags: true
   email: qowera@qq.com
   api_key:
-    secure: EWrUoaRR6hQsRNFxQdqSbu9U1J9mF4u2y8oYs36aFLl6/Z6nn3X4tvmkRtw/jF1fNDJFsEwA7qx7tBMQvxXxg53XC2ljxIQxlwR5Wra7/ppIvLMoyGj0OoboA/YJWM2JOLjpAEZPsSOSoopZut8q8jm7CTybiQ5pSWKPZSC0mwJBCvsU6UUTAsjYc06lq8qAKgy+yV5XrVwyVBm85FKjcqbAGgn1cM1WAtgfSkvTuBUTlXtVpIU6rqR4x/0CPtAQzL7JTz7jPTTgkKtMHuXy+wtLt57rHXutvI8fgUDtPoHANRbVA1azAAqOOosPcWaOtE6+jbSkOonsDJExS+ZmXWNvhE/11U1L6NfygIMnc6KL8rZ7mJ8FtBPbQASxtn4nDV11t6w2JoQBgxr9wwlvEFw/IO6YfXzrDNdXCnupJ9WPVTHUNoiQUxu7giZhfxmJNBgBBSYuBAnrLvdp/ZLOsYq+2sg13ESDCzuOQuwjDbtj8NAnfjuQ4LwunkahxIAH23BvQ6aYv/znq36RlxgokcUo79WGfNNd1oJumbSUDWi+8MpEEmnjQTlRI/JYFHOG2F9B54ll3wMVKGzvWks6CFKk/OC//wo2i2SMsw1fQ/6QoBxbYhocNhAj8yJs5ZU9WPQ4daUgIv9LUy1dKpPpTCr6WAf6HOBi4ZAJt7P3zk0=
+    secure: oyO4q6gmjPedl6XI5XMNs9wohA0x9xyt6t4jYpzWNcgVlvXzMVVEvV3cxZectU9fyt2+kuI3nx4VSGY1mymY4hm/BXmhRl83bgMAz+jeBYR2ef9qCMklPd+6oX1dcb0iOFdscaTKU18NBiSJbSTLLNeTZHWzWxxXlaclDRusMKoKtLHB8sLa/AssDVmWJqPXmiWqbp7f0CQieCNzZYrYw9nqrfb1mjfLvfK4FS3UvRH49F/CkVlt3kb30RTLg/rhrTF/5rEltWa6nhlDMq2wH8wYo5tOzwcrwa6K7ytZ6ziMfprnmdoYGCek7j298ZNOMqmuH1m9yi9arO4LXib/wvgod5ZQ5oofbPEjTmhmoBc2WfDv0qYBdqhd66oNGDriQ/OlnH42etDGYHulrUiErMQyFTBP1bs5uzvYacGUvvj9XOdi1v58lafPhkYACO0iHy1bHjp4ynCZ8vX1oJC1RDOvi9AoXJsUcj0+tuGZ91y9yhuaQ0AYyBKCcmSMkhuxMRJoAMm9plAqVcnWckIE9K6HT/D8MKAQ6xmTziSfFIskZtlNcpkRGdAVtNu8BVCXNvTvZNwaocMFOwctcvFpcbjbStHVb0wkw/fz3q08OymgNoRwChr4wFtegYz3os594XGp2QMLwXJ/KrBeMLsHRXd1FI4Riot3ZqNGPmuYVNg=
+  on:
+    tags: true
+    repo: DavidKk/bloke-theme-sharp
